@@ -1,6 +1,7 @@
 package config
 
 import (
+	"backend/models"
 	"fmt"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
@@ -34,7 +35,8 @@ func ConnectDB() {
 	}
 
 	// Auto migrate models
-	//DB.AutoMigrate(&models.User{})
+	DB.Migrator().DropTable(&models.User{})
+	DB.AutoMigrate(&models.User{})
 }
 
 func GetEnv(key, defaultValue string) string {
